@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlymaskinenServer", "FlymaskinenServer\FlymaskinenServer.csproj", "{B086B461-1425-4E1A-9347-B8AF8FEB2A8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlymaskinenClient", "FlymaskinenClient\FlymaskinenClient.csproj", "{7AB45998-CBCA-4281-B0A5-6517DF343167}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B086B461-1425-4E1A-9347-B8AF8FEB2A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B086B461-1425-4E1A-9347-B8AF8FEB2A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B086B461-1425-4E1A-9347-B8AF8FEB2A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B086B461-1425-4E1A-9347-B8AF8FEB2A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB45998-CBCA-4281-B0A5-6517DF343167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB45998-CBCA-4281-B0A5-6517DF343167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB45998-CBCA-4281-B0A5-6517DF343167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB45998-CBCA-4281-B0A5-6517DF343167}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

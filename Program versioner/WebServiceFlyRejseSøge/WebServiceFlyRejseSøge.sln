@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceFlyRejseSøge", "WebServiceFlyRejseSøge\WebServiceFlyRejseSøge.csproj", "{35C8F772-F8C0-4DDF-A1DC-4FD8BE5E3A80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klient", "Klient\Klient.csproj", "{638BB1AA-2E31-4E7F-929B-CED3511942E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35C8F772-F8C0-4DDF-A1DC-4FD8BE5E3A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C8F772-F8C0-4DDF-A1DC-4FD8BE5E3A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C8F772-F8C0-4DDF-A1DC-4FD8BE5E3A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C8F772-F8C0-4DDF-A1DC-4FD8BE5E3A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{638BB1AA-2E31-4E7F-929B-CED3511942E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638BB1AA-2E31-4E7F-929B-CED3511942E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638BB1AA-2E31-4E7F-929B-CED3511942E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638BB1AA-2E31-4E7F-929B-CED3511942E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

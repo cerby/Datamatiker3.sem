@@ -1,0 +1,201 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace flymaskinenForms
+{
+    public partial class Form1 : Form
+    {
+
+        private string pw = "password";
+        private byte[] encrypted;
+        private TcpClient tcpclient;
+        private BinaryReader r;
+        private BinaryWriter w;
+        private NetworkStream s;
+      
+        public Form1()
+        {
+           InitializeComponent();
+           ConnectToServer();
+           TcpLytter lytter = new TcpLytter(r, this); // r = vores reader og this er vores form
+           Thread lytteThread = new Thread(lytter.Listening);
+           lytteThread.Start();
+        }
+
+
+        private void btnFindrejse_Click(object sender, EventArgs e)
+        {   
+            Encrypt();
+
+            ConnectToServer();
+
+            Decrypt();
+        }
+
+
+        public delegate void AddToCombo(string msg);
+
+        public delegate void AddToListBoxCallback(string msg);
+
+        public void Encrypt()
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            UTF8Encoding utf8 = new UTF8Encoding();
+            TripleDESCryptoServiceProvider tDES = new TripleDESCryptoServiceProvider();
+            tDES.Key = md5.ComputeHash(utf8.GetBytes("password"));
+            tDES.Mode = CipherMode.ECB;
+            tDES.Padding = PaddingMode.PKCS7;
+            ICryptoTransform trans = tDES.CreateEncryptor();
+            encrypted = trans.TransformFinalBlock(utf8.GetBytes(comboBoxStartBy.Text), 0,
+                utf8.GetBytes(comboBoxStartBy.Text).Length);
+        }
+
+        public void Decrypt()
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            UTF8Encoding utf8 = new UTF8Encoding();
+            TripleDESCryptoServiceProvider tDES = new TripleDESCryptoServiceProvider();
+            if (TextBoxPassword.Text == pw)
+            {
+                tDES.Key = md5.ComputeHash(utf8.GetBytes(TextBoxPassword.Text));
+
+                tDES.Mode = CipherMode.ECB;
+                tDES.Padding = PaddingMode.PKCS7;
+                ICryptoTransform trans = tDES.CreateDecryptor();
+                comboBoxStartBy.Text = (utf8.GetString(trans.TransformFinalBlock(encrypted, 0, encrypted.Length)));
+
+                if (comboBoxStartBy.Text != comboBoxSlutBy.Text)
+                {
+                    w.Write("FINDREJSE " + comboBoxStartBy.Text + " " + comboBoxSlutBy.Text);
+
+                    string a = r.ReadString();
+                    string[] param = a.Split(' ');
+                    if (param[0] == "REJSE")
+                    {
+                        textBoxResultat.Text = a;
+                    }              
+
+                }
+                else
+                {
+                    MessageBox.Show("Du kan ikke vælge de 2 samme byer prøv igen");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Du lavede en bummert!");
+            }
+        }
+
+
+        public void sendMsgToForm(string msg)
+        {
+            if (listBox1.InvokeRequired || listBox2.InvokeRequired)
+                Invoke(new AddToListBoxCallback(this.sendMsgToForm), new object[] { msg });
+                    
+            else
+            {
+                string afbud = "";
+                string fjerner = "";
+
+
+                string[] parameters = msg.Split(' ');
+                if (parameters[0] == "defaultafbud" || parameters[0] == "AFBUD")
+                {
+                if (msg != afbud)
+                    {
+                        listBox2.Items.Add(msg);
+                        afbud = msg;
+                    }
+                }
+                else if (parameters[0] == "defaultfjerner" || parameters[0] == "NEDLAGT")
+                {
+                    if (msg != fjerner)
+                    {
+                        listBox1.Items.Add(msg); // += "\n" + msg;
+                        fjerner = msg;
+                    }
+                }
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void btnUdskrivRejser_Click(object sender, EventArgs e)
+        {
+           ConnectToServer();
+            w.Write("FINDRUTER " + " " + " " + " ");
+            richTextUdskrivRejse.Text = r.ReadString();
+            
+        }
+
+        private void BtnTilbudsrejse_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Clear();
+        }
+
+        
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            pictureBox1.ImageLocation = "http://www.sportenrejser.dk/images/fly.jpg";
+            
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            listBox1.Items.Clear();
+            
+        }
+
+        public void ConnectToServer()
+        {
+            TcpClient tcpclient = new TcpClient();
+            tcpclient.Connect("127.0.0.1", 15000); 
+             s = tcpclient.GetStream(); 
+             r = new BinaryReader(s); // Læser fra serveren
+             w = new BinaryWriter(s); // Skriver til serveren
+        }
+
+        private void btnLuk_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void comboBoxSlutBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+      
+    }
+}
